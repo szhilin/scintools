@@ -1,4 +1,4 @@
 scintools
 =========
 
-Interval Tools fo Scilab
+Interval Tools for Scilab
