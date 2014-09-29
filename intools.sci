@@ -53,9 +53,11 @@ function [a,exitcode] = isolveLP (c, A, b, ci, cs)
 //    disp(Q)
 //    [acw] = qpsolve(Q,c',A,b,ci,cs,0);
     
+    exitflag = 1
+    tol=1e-6
+ 
     //[xopt,fopt,exitflag] = karmarkar(Aeq,beq,c,x0,rtolf,gam,maxiter,outfun,A,b,lb,ub)
-    //[acw,fopt,exitflag] = karmarkar([],[],-c',[],[],[],100,[],A,b,ci,cs)
-    //disp(exitflag)
+    [acw,fopt,exitflag] = karmarkar([],[],-c',[],tol,[],1000,[],A,b,ci,cs)
     
     a = zeros(c)
     exitcode = 1
@@ -81,3 +83,12 @@ function [a,exitcode] = isolveLP (c, A, b, ci, cs)
     //a=acw
     
 endfunction
+
+// Builds interval linear regression for crisp x and interval y
+function [beta, exitflag] = iregress(x,y)
+    [c, A, b, ci, cs] = ibuildLP (x,y)
+    [beta, exitflag] = isolveLP (c, A, b, ci, cs)
+endfunction
+
+
+
